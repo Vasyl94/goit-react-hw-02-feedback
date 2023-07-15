@@ -11,10 +11,9 @@ export class App extends Component {
     bad: 0,
   };
 
-  hadleIncrement = evt => {
-    const { name } = evt.target;
+  hadleIncrement = (option) => {
     this.setState(prevState => ({
-      [name]: prevState[name] + 1,
+      [option]: prevState[option] + 1,
     }));
   };
 
@@ -31,6 +30,7 @@ export class App extends Component {
 
   render() {
     const { good, bad, neutral } = this.state;
+    const total= this.countTotalFeedback();
 
     return (
       <>
@@ -42,14 +42,14 @@ export class App extends Component {
         </Section>
 
         <Section title="Statistics">
-          {good === 0 && bad === 0 && neutral === 0 ? (
+          {!total ? (
             <Notification message="There is no feedback" />
           ) : (
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
-              total={this.countTotalFeedback()}
+              total={total}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             />
           )}
